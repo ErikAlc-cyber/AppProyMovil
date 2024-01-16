@@ -30,12 +30,15 @@ class client_main : AppCompatActivity() {
 
     private lateinit var binding: ActivityClientMainBinding
     private lateinit var title: TextView
+    private lateinit var rol: String
     val CODIGO_DE_SOLICITUD_MAPS = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val userName = intent.getStringExtra("USERNAME")
         val userID = intent.getStringExtra("USER_ID")
+        rol = intent.getStringExtra("Rol").toString()
+
 
         binding = ActivityClientMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -46,7 +49,7 @@ class client_main : AppCompatActivity() {
 
         val apiService = ApiService.apiService
 
-        val sectionsPagerAdapter = SectionsPagerAdapterForClient(this, supportFragmentManager, apiService, userID!!.toInt())
+        val sectionsPagerAdapter = SectionsPagerAdapterForClient(this, supportFragmentManager, apiService, userID!!.toInt(), rol)
         val viewPager: ViewPager = binding.viewPager
         viewPager.adapter = sectionsPagerAdapter
         val tabs: TabLayout = binding.tabs
@@ -134,21 +137,21 @@ class client_main : AppCompatActivity() {
     }
 
     fun updateShoppingCart(product: Producto) {
-        val shoppingCartFragment = supportFragmentManager.findFragmentByTag("android:switcher:2131231261:2")
+        val shoppingCartFragment = supportFragmentManager.findFragmentByTag("android:switcher:2131231258:2")
         if (shoppingCartFragment is ShoppingCart) {
             shoppingCartFragment.updateShoppingCart(product)
         }
     }
 
     fun removeProductFromCart(product: Producto) {
-        val shoppingCartFragment = supportFragmentManager.findFragmentByTag("android:switcher:2131231261:2")
+        val shoppingCartFragment = supportFragmentManager.findFragmentByTag("android:switcher:2131231258:2")
         if (shoppingCartFragment is ShoppingCart) {
             shoppingCartFragment.removeProductFromCart(product)
         }
     }
 
     fun obtenerTotalCarrito(): Double {
-        val shoppingCartFragment = supportFragmentManager.findFragmentByTag("android:switcher:2131231261:2")
+        val shoppingCartFragment = supportFragmentManager.findFragmentByTag("android:switcher:2131231258:2")
         if (shoppingCartFragment is ShoppingCart) {
             val adapter = (shoppingCartFragment.view as? RecyclerView)?.adapter as? ShoppingCartAdapter
             return adapter?.calculateTotal() ?: 0.0
@@ -157,7 +160,7 @@ class client_main : AppCompatActivity() {
     }
 
     fun obtenerIdsProductosEnCarrito(): String {
-        val shoppingCartFragment = supportFragmentManager.findFragmentByTag("android:switcher:2131231261:2")
+        val shoppingCartFragment = supportFragmentManager.findFragmentByTag("android:switcher:2131231258:2")
         if (shoppingCartFragment is ShoppingCart) {
             val adapter = (shoppingCartFragment.view as? RecyclerView)?.adapter as? ShoppingCartAdapter
             val productList = adapter?.getProductsList() ?: emptyList()

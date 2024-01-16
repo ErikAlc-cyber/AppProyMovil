@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
             if (nombre.isNotEmpty()) {
                 intent.putExtra("USERNAME", nombre)
                 intent.putExtra("USER_ID", id)
+                intent.putExtra("Rol", role)
             }
             context.startActivity(intent)
         }

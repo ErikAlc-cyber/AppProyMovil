@@ -35,6 +35,7 @@ class ShoppingCartAdapter(
         holder.btnElim.setOnClickListener{
             val mainActivity = activity as? client_main
             mainActivity?.removeProductFromCart(item)
+            mainActivity?.obtenerTotalCarrito()
         }
     }
 

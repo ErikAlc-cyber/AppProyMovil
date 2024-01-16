@@ -1,6 +1,7 @@
 package mx.ipn.escom.alcantarae.proymoviles.apihandler
 
 import retrofit2.Response
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.HTTP
 import retrofit2.http.POST
@@ -76,6 +77,16 @@ interface ApiServiceInterface {
 
     @PUT("/Estado_en/{idPedido}")
     suspend fun terminarPedido(
+        @Path("idPedido") idpedido: Int
+    ): Response<Void>
+
+    @PUT("/Estado_ab/{idPedido}")
+    suspend fun abrirPedido(
+        @Path("idPedido") idpedido: Int
+    ): Response<Void>
+
+    @DELETE("/eliminar_pedido/{idPedido}")
+    suspend fun cerrarPedido(
         @Path("idPedido") idpedido: Int
     ): Response<Void>
 }

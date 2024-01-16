@@ -21,7 +21,7 @@ import mx.ipn.escom.alcantarae.proymoviles.apihandler.ApiServiceInterface
 import mx.ipn.escom.alcantarae.proymoviles.detalles_pedido
 import java.util.concurrent.TimeoutException
 
-class pedidos(private val apiService: ApiServiceInterface, private val user_id: Int) : Fragment() {
+class pedidos(private val apiService: ApiServiceInterface, private val user_id: Int, private val rol: String) : Fragment() {
 
     private var columnCount = 1
 
@@ -87,6 +87,7 @@ class pedidos(private val apiService: ApiServiceInterface, private val user_id: 
                             // Abre la nueva actividad aquí
                             val intent = Intent(requireContext(), detalles_pedido::class.java)
                             intent.putExtra("idPedido", pedido.id_pedido)
+                            intent.putExtra("rol", rol)
                             Log.d("Importante", "Se paso el valor: ${pedido.id_pedido}")
                             startActivity(intent)
                         }
@@ -105,8 +106,8 @@ class pedidos(private val apiService: ApiServiceInterface, private val user_id: 
         const val ARG_COLUMN_COUNT = "column-count"
 
         @JvmStatic
-        fun newInstance(columnCount: Int, apiService: ApiServiceInterface, user_id: Int) =
-            pedidos(apiService, user_id).apply {
+        fun newInstance(columnCount: Int, apiService: ApiServiceInterface, user_id: Int, rol: String) =
+            pedidos(apiService, user_id, rol).apply {
                 arguments = Bundle().apply {
                     putInt(ARG_COLUMN_COUNT, columnCount)
                 }

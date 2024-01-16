@@ -13,12 +13,13 @@ class SectionsPagerAdapterForEmployee(
     private val activity: Activity,
     fm: FragmentManager,
     private val apiService: ApiServiceInterface,
-    private val user_id: Int
+    private val user_id: Int,
+    private val rol: String
 ) : FragmentPagerAdapter(fm) {
 
     override fun getItem(position: Int): Fragment {
         return when (position) {
-            0 -> employ_history(activity,apiService, user_id)
+            0 -> employ_history(activity,apiService, user_id, rol)
             1 -> open_work(activity, apiService, user_id)
             else -> throw IllegalArgumentException("Posicion invalida: $position")
         }

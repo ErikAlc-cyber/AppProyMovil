@@ -23,6 +23,7 @@ class ShoppingCart(private val activity: Activity, private val apiService: ApiSe
 
     private var columnCount = 1
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -38,6 +39,8 @@ class ShoppingCart(private val activity: Activity, private val apiService: ApiSe
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_shopping_cart_list, container, false)
+
+        view.tag = "ShoppingCartFragmentTag"
 
         // Set the adapter
         if (view is RecyclerView) {

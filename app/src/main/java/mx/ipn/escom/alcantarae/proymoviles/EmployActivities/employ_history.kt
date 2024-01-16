@@ -28,7 +28,7 @@ import java.util.concurrent.TimeoutException
 /**
  * A fragment representing a list of Items.
  */
-class employ_history(private val activity: Activity, private val apiService: ApiServiceInterface, private val user_id: Int) : Fragment() {
+class employ_history(private val activity: Activity, private val apiService: ApiServiceInterface, private val user_id: Int, private val rol: String) : Fragment() {
 
     private var columnCount = 1
 
@@ -95,6 +95,7 @@ class employ_history(private val activity: Activity, private val apiService: Api
                             // Abre la nueva actividad aquí
                             val intent = Intent(requireContext(), detalles_pedido::class.java)
                             intent.putExtra("idPedido", pedido.id_pedido)
+                            intent.putExtra("Rol", rol)
                             startActivity(intent)
                         }
                     }
@@ -113,8 +114,8 @@ class employ_history(private val activity: Activity, private val apiService: Api
         const val ARG_COLUMN_COUNT = "column-count"
 
         @JvmStatic
-        fun newInstance(activity: Activity, columnCount: Int, apiService: ApiServiceInterface, user_id: Int) =
-            employ_history(activity, apiService, user_id).apply {
+        fun newInstance(activity: Activity, columnCount: Int, apiService: ApiServiceInterface, user_id: Int, rol: String) =
+            employ_history(activity, apiService, user_id, rol).apply {
                 arguments = Bundle().apply {
                     putInt(ARG_COLUMN_COUNT, columnCount)
                 }

@@ -22,11 +22,13 @@ class employ_main : AppCompatActivity() {
 
     private lateinit var binding: ActivityEmployMainBinding
     private lateinit var title: TextView
+    private lateinit var rol: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val userName = intent.getStringExtra("USERNAME")
         val userID = intent.getStringExtra("USER_ID")
+        rol = intent.getStringExtra("Rol").toString()
 
         binding = ActivityEmployMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -36,7 +38,7 @@ class employ_main : AppCompatActivity() {
 
         val apiService = ApiService.apiService
 
-        val sectionsPagerAdapter = SectionsPagerAdapterForEmployee(this, supportFragmentManager, apiService, userID!!.toInt())
+        val sectionsPagerAdapter = SectionsPagerAdapterForEmployee(this, supportFragmentManager, apiService, userID!!.toInt(), rol)
         val viewPager: ViewPager = binding.viewPager
         viewPager.adapter = sectionsPagerAdapter
         val tabs: TabLayout = binding.tabs

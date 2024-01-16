@@ -1,10 +1,12 @@
 package mx.ipn.escom.alcantarae.proymoviles
 
+import android.app.Activity
 import android.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import com.google.android.material.textview.MaterialTextView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
@@ -14,6 +16,7 @@ import mx.ipn.escom.alcantarae.proymoviles.apihandler.ApiService
 import mx.ipn.escom.alcantarae.proymoviles.apihandler.Pedido
 import mx.ipn.escom.alcantarae.proymoviles.apihandler.verUserResponse
 import retrofit2.Response
+import kotlin.properties.Delegates
 
 class detalles_pedido : AppCompatActivity() {
 
@@ -23,18 +26,21 @@ class detalles_pedido : AppCompatActivity() {
     private lateinit var txtDesc: MaterialTextView
     private lateinit var txtEstado: MaterialTextView
     private val scope = MainScope()
+    private lateinit var rol: String
+    private var idpedido = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detalles_pedido)
 
-        val idPedido = intent.getIntExtra("idPedido", 0)
+        idpedido = intent.getIntExtra("idPedido", 0)
+        rol = intent.getStringExtra("Rol").toString()
 
         scope.launch {
             try {
                 val apiService = ApiService.apiService
                 val response = withContext(Dispatchers.IO) {
-                    apiService.infoPedido(idPedido)
+                    apiService.infoPedido(idpedido)
                 }
                 handleResponse(response)
             } catch (e: Exception) {
@@ -56,7 +62,7 @@ class detalles_pedido : AppCompatActivity() {
 
         var btnCan: Button = findViewById(R.id.btnCancelar)
         btnCan.setOnClickListener {
-            finish()
+            cancelarPedido()
         }
 
         withContext(Dispatchers.Main) {
@@ -91,5 +97,21 @@ class detalles_pedido : AppCompatActivity() {
         builder.setPositiveButton("OK", null)
         val dialog = builder.create()
         dialog.show()
+    }
+
+    private fun cancelarPedido(){
+        scope.launch {
+            try {
+                val apiService = ApiService.apiService
+                if (rol.equals("empleado")){
+                    apiService.abrirPedido(idpedido)
+                }else{
+                    apiService.cerrarPedido(idpedido)
+                }
+                Toast.makeText( this@detalles_pedido, "Pedido Cancelado", Toast.LENGTH_SHORT).show()
+            } catch (e: Exception) {
+                handleLoginError(e)
+            }
+        }
     }
 }

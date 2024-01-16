@@ -13,7 +13,8 @@ class SectionsPagerAdapterForClient(
     private val activity: Activity,
     fm: FragmentManager,
     private val apiService: ApiServiceInterface,
-    private val user_id: Int
+    private val user_id: Int,
+    private val rol: String
 ) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     companion object {
@@ -22,7 +23,7 @@ class SectionsPagerAdapterForClient(
 
     private val fragmentTitles = arrayOf("Historial", "Pedir", "Carrito de Compras")
     private val fragments: Array<() -> Fragment> = arrayOf(
-        { pedidos(apiService, user_id) },
+        { pedidos(apiService, user_id, rol) },
         { Catalogo(activity, apiService) },
         { ShoppingCart(activity,apiService, user_id) }
     )
